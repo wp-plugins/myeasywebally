@@ -44,7 +44,7 @@ Based on the preferences you set on the dedicated site, you will start getting a
 
 Each  report includes vital information about all the plugins installed on all your blogs/sites. Moreover it lists all the links related to each plugin as well as some clues about what you should do for each of them.
 
-If you care for your customers even after they have paid you Ð as you may be aware that they can bring more money in, when they are happy with your services Ð then you should definitely consider to get your loyal ally, all you need to do is to install the myEASYwebally plugin right now.
+If you care for your customers even after they have paid you &ndash; as you may be aware that they can bring more money in, when they are happy with your services &ndash; then you should definitely consider to get your loyal ally, all you need to do is to install the myEASYwebally plugin right now.
 
 Related Links:
 
