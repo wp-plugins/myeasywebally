@@ -13,38 +13,33 @@ How much time do you spend to perform your WordPress blogs/sites maintenance?
 
 Are you sure the new plugins you are going to install will not break your WordPress installation?
 
-Are all your plugins and your template ready for WordPress 4.0?
+Are all your plugins and your template ready for the latest version of WordPress?
 
-When using WordPress to professionally produce sites for your customers, doing the proper maintenance can really take some time. I started using WordPress only few months ago and I already have more than twenty sites to manage, and much more to come.
+When using WordPress to professionally produce sites for your customers, doing the proper maintenance can really take a lot of time.
 
-I have heard of developers (and Companies!) that do not care to keep their customers sites updated at all. Once the site is released the job is considered closed and - unfortunately for the customer - totally forgotten!
+When WordPress websites are not updated it is pretty common for them to get hacked.
 
-Well, with all the problems you may face when you do not care enough about security, it is much better to constantly keep things under control as much as possible.
+The main problems in keeping everything updated is the amount of extra time you need to take from your already busy schedule and the risk to get your WordPress installation broken by a plugin upgrade.
 
-The main problems in keeping everything updated are the amount of extra time you need to take from your already busy schedule and the risk to get your WordPress installation broken by a plugin upgrade.
-
-Now you can enroll your ally and let him help you to save quite a good amount of time, just install myEASYwebally!
-
-How does myEASYwebally work?
-myEASYwebally is made of two different agents: the plugin and its <a href="https://services.myeasywp.com">dedicated server</a>.
-
-The plugin takes care of collecting the information you need to know about your WordPress installations at regular intervals of time. Such information is saved on your uploads folder as a PHP page. This page is created in a way that it shows the included information ONLY when its called from the dedicated server.
-Trying to execute the page from any other location, like your site or another system, show <a href="http://myeasywp.com/myEASYwebally-notifier.php">this result</a>.
-
-The dedicated server takes care to inquiry the pages created by myEASYwebally at regular intervals of time and to keep a list of all the reported plugins, their related information as well as some useful information about your WordPress installation.
-Periodically, the dedicated server reads the information from its database to prepare and email the required reports.
-
-To 'group' the information from several sites to the same user, the mechanism uses an API key, available for free by <a href="https://services.myeasywp.com/?page=account-add">registering</a> at the dedicated server.
-
-We are also working on a number of additional services you will be able to get from your ally, check out what's going on <a href="https://services.myeasywp.com/?page=services">here</a>.
+Now you can enroll your ally and let him help you to save quite a good amount of time, myEASYwebally!
 
 Install myEASYwebally on all your WordPress blogs/sites, enter your own API key in the settings page and click on the activate button: that's it!
 
-Based on the preferences you set on the dedicated site, you will start getting a daily, weekly or monthly email report. You may also decide not to receive emails and checking the reports on the dedicated server by yourselve.
+To 'group' the information from several sites to the same user, the mechanism uses an API key, available for free by <a href="https://services.myeasywp.com/?page=account-add">registering</a> at our website.
 
-Each  report includes vital information about all the plugins installed on all your blogs/sites. Moreover it lists all the links related to each plugin as well as some clues about what you should do for each of them.
+We are also working on a number of additional services you will be able to get from your ally, check out what's going on <a href="https://services.myeasywp.com/?page=services">here</a>.
 
-If you care for your customers even after they have paid you &ndash; as you may be aware that they can bring more money in, when they are happy with your services &ndash; then you should definitely consider to get your loyal ally, all you need to do is to install the myEASYwebally plugin right now.
+Based on the preferences you set on the dedicated site, you will start getting a daily, weekly or monthly email report. You may also decide not to receive emails and check the reports on the dedicated server.
+
+Each report includes vital information about all the plugins installed on all your blogs/sites. Moreover it lists all the links related to each plugin as well as some clues about what you should do for each of them.
+
+How does myEASYwebally work?
+
+myEASYwebally is made of two different agents: the plugin and its <a href="https://services.myeasywp.com">dedicated server</a>.
+
+The plugin takes care of collecting the information you need to know about your WordPress installations at regular intervals of time. Such information is saved on your uploads folder as a PHP page. This page is created in a way that it shows the included information ONLY when its called from the dedicated server. 
+
+The dedicated server checks the pages created by myEASYwebally at regular intervals of time and to keep a list of all the reported plugins, their related information as well as some useful information about your WordPress installation. Periodically, the dedicated server reads the information from its database to prepare and email a report with those informations to you.
 
 Related Links:
 
