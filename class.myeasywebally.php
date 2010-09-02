@@ -201,7 +201,7 @@ class myEASYwebally_CLASS {
 				delete_option( 'myewally_emailfrq' );
 				delete_option( 'myewally_last_update' );
 				delete_option( 'myewally_authorized_ip' );
-				delete_option( 'myewally_showcredits' );
+//				delete_option( 'myeasy_showcredits' );
 
 				echo '<script>window.location.href=\'options-general.php?page=myEASYwebally_settings\';</script>';
 				exit();
@@ -229,13 +229,13 @@ class myEASYwebally_CLASS {
 					update_option( 'myewally_emailfrq', $_POST['myewally_emailfrq'] );
 				}
 
-				if(isset($_POST['myewally_showcredits']))
+				if(isset($_POST['myeasy_showcredits']))
 				{
-					update_option( 'myewally_showcredits', 1 );
+					update_option( 'myeasy_showcredits', 1 );
 				}
 				else
 				{
-					update_option( 'myewally_showcredits', 0 );
+					update_option( 'myeasy_showcredits', 0 );
 				}
 
 				/**
@@ -263,12 +263,12 @@ class myEASYwebally_CLASS {
 			$_POST['myewally_emailfrq'] = -1;
 		}
 
-		if(!isset($_POST['myewally_showcredits'])) {
+		if(!isset($_POST['myeasy_showcredits'])) {
 
-			$tmp = get_option('myewally_showcredits');
+			$tmp = get_option('myeasy_showcredits');
 			if(strlen($tmp)==0) { $tmp = 1;}
 
-			$_POST['myewally_showcredits']= $tmp;
+			$_POST['myeasy_showcredits']= $tmp;
 		}
 
 //		if(!is_email($_POST['myewally_userEmail']))
@@ -487,15 +487,15 @@ class myEASYwebally_CLASS {
 					#	show credits
 					#
 					$checked ='';
-//					if(!isset($_POST['myewally_showcredits']) || $_POST['myewally_showcredits']==1) { $checked = ' checked="checked"'; }
-					if($_POST['myewally_showcredits']==1) { $checked = ' checked="checked"'; }
+//					if(!isset($_POST['myeasy_showcredits']) || $_POST['myeasy_showcredits']==1) { $checked = ' checked="checked"'; }
+					if($_POST['myeasy_showcredits']==1) { $checked = ' checked="checked"'; }
 
 					echo '' . __('We invested a lot of time to create this plugin and its related sites, please allow us to place a small credit in your blog footer, here is how it will look:', $this->locale )
 							. '<br />'
 							. MYEWALLY_FOOTER_CREDITS
 					;
 
-					?><p><input type="checkbox" name="myewally_showcredits" value="1"<?php echo $checked; ?> />&nbsp;<?php
+					?><p><input type="checkbox" name="myeasy_showcredits" value="1"<?php echo $checked; ?> />&nbsp;<?php
 
 						echo __('Yes, I like to help you!', $this->locale )
 								. ' &mdash; ' . __('If you decide not to show the credits, please consider to <a href="http://myeasywp.com/professional-open/" target="_blank">make a donation</a>: you will help us to keep up with the developent.', $this->locale )
@@ -744,7 +744,7 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 		/**
 		 * on demand, show the credits on the footer
 		 */
-		if(get_option('myewally_showcredits')==true) {
+		if(get_option('myeasy_showcredits')==true) {    /* 1.0.1 changed all references from 'myewally_showcredits' */
 
 			add_action('wp_footer', 'mycredits');
 			function mycredits() {

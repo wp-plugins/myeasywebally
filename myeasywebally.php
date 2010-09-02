@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: myEASYwebally
-Plugin URI: http://services.myeasywp.com
-Description: More than a simple plugins, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance! You need a free <a href="https://services.myeasywp.com/?page=account-add">API key</a> to use it.
-Version: 1.0.0
+Plugin URI: http://myeasywp.com/plugins/myeasywebally/
+Description: More than a simple plugin, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance! You need a free <a href="https://services.myeasywp.com/?page=account-add">API key</a> to use it.
+Version: 1.0.1
 Author: Ugo Grandolini aka "camaleo"
 Author URI: http://grandolini.com
 */
-/*	More than a simple plugins, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance!
+/*
 	Copyright (C) 2010 Ugo Grandolini  (email : info@myeasywp.com)
 
     This program is free software: you can redistribute it and/or modify

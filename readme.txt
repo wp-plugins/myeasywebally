@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: plugin, admin, administration, widget, Post, posts, update
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 More than a simple plugins, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance!
 
@@ -69,6 +69,11 @@ If there is no FAQ send us an email through the <a href="http://myeasywp.com/con
 
 
 == Changelog ==
+
+= 1.0.1 (2 September 2010) =
+Fixed:
+
+* Changed the option name used to show/hide the plugin credits to avoid duplicates when using more than one plugin in the myEASY series.
 
 = 1.0.0 =
 This is the first release.
