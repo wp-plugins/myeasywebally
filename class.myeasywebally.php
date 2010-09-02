@@ -5,7 +5,7 @@ class myEASYwebally_CLASS {
 	/**
 	 * main class for the myEASYwebally plugin
 	 */
-	var $version = '1.0.0';
+	var $version = '1.0.2';
 	var $plugin_name ='myEASYwebally';
 	var $plugin_slug = 'myeasy-webally';
 
@@ -744,12 +744,16 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 		/**
 		 * on demand, show the credits on the footer
 		 */
-		if(get_option('myeasy_showcredits')==true) {    /* 1.0.1 changed all references from 'myewally_showcredits' */
+		if(get_option('myeasy_showcredits')==true && !function_exists('myeasy_credits') && !defined('MYEASY_SHOWCREDITS')) {    /* 1.0.1 changed all references from 'myewally_showcredits' */
 
-			add_action('wp_footer', 'mycredits');
-			function mycredits() {
+			/**
+			 * on demand, show the credits on the footer
+			 */
+			add_action('wp_footer', 'myeasy_credits');
+			function myeasy_credits() {
 
-			  echo MYEWALLY_FOOTER_CREDITS;
+				echo MEBAK_FOOTER_CREDITS;
+				define('MYEASY_SHOWCREDITS', true);
 			}
 		}
 	}
