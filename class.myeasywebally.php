@@ -153,9 +153,12 @@ class myEASYwebally_CLASS {
 //$sql = 'SELECT count(*) as tu FROM `'.$wpdb->users.'` ';
 //$rows = $wpdb->get_results( $sql );
 
+		?><script type="text/javascript">var myeasyplugin = 'myeasywebally';</script><?php
+
 		echo '<div class="wrap">'
 				.'<div id="icon-options-general" class="icon32" style="background:url(http://myeasywp.com/service/img/icon.png);"><br /></div>'
 				.'<h2>myEASYwebally: ' . __( 'Settings' ) . '</h2>'
+
 
 //.$rows[0]->tu
 
