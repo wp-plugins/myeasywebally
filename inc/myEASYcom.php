@@ -15,6 +15,9 @@ $version='1.1.3';
 define('MYEASYWP_DOMAIN', 'myeasywp.com');
 define('MYEASYWP_PATH', '');
 
+//echo 'zend_loader_enabled['.zend_loader_enabled().']';
+
+
 if(!function_exists('measycom_camaleo_links')) {
 
 	function measycom_camaleo_links() {
@@ -77,9 +80,9 @@ if(!function_exists('measycom_camaleo_links')) {
 				</a>
 			</div>
 		</form>
-		<!--<script type="text/javascript">var myeasyplugin = 'myeasybackup';</script>-->
-		<script type="text/javascript" src="http://<?php echo MYEASYWP_DOMAIN.'/'.MYEASYWP_PATH; ?>/service/mc/jquery-1.4.2.min.js"></script>
-		<script type="text/javascript" src="http://<?php echo MYEASYWP_DOMAIN.'/'.MYEASYWP_PATH; ?>/service/mc/mailing-list.js"></script><?php
+		<script type="text/javascript">var myeasyplugin = '<?php echo myEASYcomCaller; ?>';</script>
+		<script type="text/javascript" src="http://<?php echo MYEASYWP_DOMAIN.MYEASYWP_PATH; ?>/service/mc/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="http://<?php echo MYEASYWP_DOMAIN.MYEASYWP_PATH; ?>/service/mc/mailing-list.js"></script><?php
 	}
 }
 

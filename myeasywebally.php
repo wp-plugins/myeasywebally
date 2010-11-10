@@ -27,8 +27,9 @@ Author URI: http://grandolini.com
 define('MYEWALLY_DEBUG', false);
 
 define('MYEWALLY_LOCALE', 'myEASYwebally');
+define('myEASYcomCaller', 'myeasywebally');       # @since 1.0.3: the plugin install folder
 
-define('MYEWALLY_FOOTER_CREDITS', '<div style="font-size:9px;text-align:center;"><a href="http://services.myeasywp.com" target="_blank">Improve Your Life, Go The myEASY Way&trade;</a></div>');
+define('MYEWALLY_FOOTER_CREDITS', '<div style="font-size:9px;text-align:center;"><a href="http://myeasywp.com" target="_blank">Improve Your Life, Go The myEASY Way&trade;</a></div>');
 
 define('SAVE_BTN', __('Update Options', MYEWALLY_LOCALE ));
 define('ACTIVATE_BTN', __('Activate', MYEWALLY_LOCALE ));
@@ -85,11 +86,20 @@ if(is_admin()) {
 	 * dashboard plugin own item
 	 */
 	$datetime = get_option('date_format') . ' ' . get_option('time_format');
-	$time_gmt = get_option('myewally_last_update') + (get_option('gmt_offset')*3600);
+	$last_update = get_option('myewally_last_update');
+
+	if((int)$last_update>0) {
+
+		$last_date = date($datetime, ($last_update + (get_option('gmt_offset')*3600)));
+	}
+	else {
+
+		$last_date = __( 'no file created yet.', MYEWALLY_LOCALE );
+	}
 
 	$MYEWALLY_backend->dash_title = '<span>' . __( 'myEASYwebally info', MYEWALLY_LOCALE ) . '</span>';
 	$MYEWALLY_backend->dash_contents = ''
-							. '<p>' . __( 'Last update sent to the main server: ', MYEWALLY_LOCALE ) . date($datetime, $time_gmt) . '</p>'
+							. '<p>' . __( 'The last information file for this blog was created on: ', MYEWALLY_LOCALE ) . $last_date . '</p>'
 	;
 
 } else {
