@@ -5,7 +5,7 @@ class myEASYwebally_CLASS {
 	/**
 	 * main class for the myEASYwebally plugin
 	 */
-	var $version = '1.0.2';
+	var $version = '1.0.3';
 	var $plugin_name ='myEASYwebally';
 	var $plugin_slug = 'myeasy-webally';
 
@@ -159,7 +159,6 @@ class myEASYwebally_CLASS {
 				.'<div id="icon-options-general" class="icon32" style="background:url(http://myeasywp.com/service/img/icon.png);"><br /></div>'
 				.'<h2>myEASYwebally: ' . __( 'Settings' ) . '</h2>'
 
-
 //.$rows[0]->tu
 
 //			.'</div>'
@@ -176,6 +175,12 @@ class myEASYwebally_CLASS {
 				#
 				#	activate the plugin
 				#
+				/**
+				 * get the authorized ip from the main server
+				 */
+				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');
+				update_option( 'myewally_authorized_ip', $authorized_ip );
+
 				if(isset($_POST['myewally_userKey']))
 				{
 					update_option( 'myewally_userKey', $_POST['myewally_userKey'] );
@@ -245,6 +250,7 @@ class myEASYwebally_CLASS {
 				 * get the authorized ip from the main server
 				 */
 				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');
+
 				update_option( 'myewally_authorized_ip', $authorized_ip );
 				break;
 				#

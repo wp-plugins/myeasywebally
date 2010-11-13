@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: plugin, admin, administration, widget, Post, posts, update
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 More than a simple plugins, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance!
 
@@ -70,11 +70,15 @@ If there is no FAQ send us an email through the <a href="http://myeasywp.com/con
 
 == Changelog ==
 
-= 1.0.2 (TODO September 2010) =
+= 1.0.3 (13 November 2010) =
 Fixed:
 
 * Removed unnecessary calls to style sheet and javascript.
+* Fixed an issue where in certain circumstances the file including the generated info was missing some data.
 
+Changed:
+
+* Changed the <a href="http://eepurl.com/bt8f1" target="_blank">newsletter provider</a> as the previous one is going to close his service by the end of 2010.
 
 = 1.0.1 (2 September 2010) =
 Fixed:

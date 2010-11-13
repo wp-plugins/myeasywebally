@@ -3,7 +3,7 @@
 Plugin Name: myEASYwebally
 Plugin URI: http://myeasywp.com/plugins/myeasywebally/
 Description: More than a simple plugin, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance! You need a free <a href="https://services.myeasywp.com/?page=account-add">API key</a> to use it.
-Version: 1.0.2
+Version: 1.0.3
 Author: Ugo Grandolini aka "camaleo"
 Author URI: http://grandolini.com
 */
