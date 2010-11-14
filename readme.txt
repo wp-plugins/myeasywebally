@@ -1,7 +1,7 @@
 === myEASYwebally ===
 Contributors: camaleo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WNNDSCQ5L8N5J
-Tags: plugin, admin, administration, widget, Post, posts, update
+Tags: myeasy, update, admin, administration, ajax, comments, google, facebook, image, images, links, jquery, plugin, plugins, post, posts, rss, seo, sidebar, social, twitter, video, widget, wordpress, youtube
 Requires at least: 2.8
 Tested up to: 3.0.1
 Stable tag: 1.0.3

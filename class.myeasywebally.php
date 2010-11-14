@@ -755,6 +755,10 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 		 */
 		if(get_option('myeasy_showcredits')==true && !function_exists('myeasy_credits') && !defined('MYEASY_SHOWCREDITS')) {    /* 1.0.1 changed all references from 'myewally_showcredits' */
 
+			define('MEBAK_FOOTER_CREDITS', '<div style="font-size:9px;text-align:center;">'
+					.'<a href="http://myeasywp.com" target="_blank">Improve Your Life, Go The myEASY Way&trade;</a>'
+					.'</div>');
+
 			/**
 			 * on demand, show the credits on the footer
 			 */
