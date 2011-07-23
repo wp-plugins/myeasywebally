@@ -3,10 +3,10 @@ Contributors: camaleo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WNNDSCQ5L8N5J
 Tags: myeasy, update, admin, administration, ajax, comments, google, facebook, image, images, links, jquery, plugin, plugins, post, posts, rss, seo, sidebar, social, twitter, video, widget, wordpress, youtube
 Requires at least: 2.8
-Tested up to: 3.0.1
-Stable tag: 1.0.3
+Tested up to: 3.2.1
+Stable tag: trunk
 
-More than a simple plugins, myEASYwebally lets you save quite a good amount of time when doing your WordPress blog maintenance!
+More than a simple plugins, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance!
 
 == Description ==
 How much time do you spend to perform your WordPress blogs/sites maintenance?
@@ -69,6 +69,17 @@ If there is no FAQ send us an email through the <a href="http://myeasywp.com/con
 
 
 == Changelog ==
+= 1.0.8 (23 July 2011) =
+All the images and javascript code is now loaded from the same server where the plugin is installed.
+Last year I tought it might be useful to have the myeasy common images and code loaded from a CDN to avoid having to update all the plugins in the series each time an image changes and to load pages faster; so I moved all the common items to a CDN.
+Today I received a kind email from wordpress.org letting me know that "there a potential malicious intent issue here as you {me} could change the files to embed malicious code and nobody would be the wiser" and asking me to change the code.
+I promptly reacted to show everyone that I am 101% in bona fide and here is a new version.
+
+= 1.0.4 (27 November 2010) =
+Fixed:
+
+* The authorized ip of the main server is now automatically calculated - please allow 24 hours for this change to be taken into effect after you install this update.
+* Once the plugin is activated it will be immediately recognized by the services site. Before this fix you needed to reload the blog home page to be able to add the blog on the services site.
 
 = 1.0.3 (13 November 2010) =
 Fixed:
@@ -89,6 +100,9 @@ Fixed:
 This is the first release.
 
 == Upgrade Notice ==
+
+= 1.0.4.1 =
+Fully deactivate and then reactivate after installing this version.
 
 = 1.0.0 =
 This is the first release.

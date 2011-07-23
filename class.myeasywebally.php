@@ -5,7 +5,7 @@ class myEASYwebally_CLASS {
 	/**
 	 * main class for the myEASYwebally plugin
 	 */
-	var $version = '1.0.3';
+	var $version = '1.0.4.1';
 	var $plugin_name ='myEASYwebally';
 	var $plugin_slug = 'myeasy-webally';
 
@@ -23,7 +23,7 @@ class myEASYwebally_CLASS {
 		/**
 		 * initializations
 		 */
-		wp_register_style('myeasywp_common', 'http://myeasywp.com/service/css/myeasywp.css');   // common myeasy style
+		wp_register_style('myeasywp_common', MYEASY_CDN_CSS.'myeasywp.css');   // common myeasy style
 
 		register_deactivation_hook($this->main_plugin, array($this, 'plugin_deactivate'));
 //echo $this->main_plugin;
@@ -63,7 +63,7 @@ class myEASYwebally_CLASS {
 
 //echo '(<b>plugin_setup</b>:'. $this->plugin_name.')';
 
-		wp_enqueue_style( 'myeasywp_common', 'http://myeasywp.com/service/css/myeasywp.css', '', '20100516', 'screen' );
+		wp_enqueue_style( 'myeasywp_common', MYEASY_CDN_CSS.'myeasywp.css', '', '20111206', 'screen' );
 
 		if(strlen($this->css)>0) {
 			wp_enqueue_style($this->plugin_slug . '-style', $this->url . '/css/'.$this->css.'.css', '', $this->version, 'screen');
@@ -136,7 +136,20 @@ class myEASYwebally_CLASS {
 
 		wp_add_dashboard_widget($this->plugin_slug, $this->dash_title, array($this, 'dashboard_widget_function'));
 
+		global $myeasywp_news;
+		//echo '{'.$myeasywp_news->ref_code.'}';//debug
+		if($myeasywp_news->ref_code=='') {
+
+			$myeasywp_news = new myeasywp_news();
+			$myeasywp_news->ref_code = 'mew';
+			$myeasywp_news->ref_family = '';
+//			$myeasywp_news->ref_family = false;//debug
+			$myeasywp_news->plugin_init();
+			$myeasywp_news->register_widget();
+		}
+
 	}
+
 	function dashboard_widget_function() {
 
 		echo $this->dash_contents;
@@ -167,6 +180,11 @@ class myEASYwebally_CLASS {
 		$_POST['myewally_userKey'] = trim($_POST['myewally_userKey']);
 		$_POST['myewally_userEmail'] = trim($_POST['myewally_userEmail']);
 
+
+// services: 67.215.65.132
+//echo '['.gethostbyname('services.myeasywp.com').']';
+
+
 		switch($_POST['btn'])
 		{
 			#----------------
@@ -178,13 +196,28 @@ class myEASYwebally_CLASS {
 				/**
 				 * get the authorized ip from the main server
 				 */
-				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');
+//				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');  // 1.0.4
+				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
+
 				update_option( 'myewally_authorized_ip', $authorized_ip );
 
 				if(isset($_POST['myewally_userKey']))
 				{
 					update_option( 'myewally_userKey', $_POST['myewally_userKey'] );
 				}
+
+				/**
+				 * @since 1.0.4 : re-create the report file
+				 */
+//echo '{{{'.MYEWALLY_REPORT_FILE.'}}}';
+//echo '{{{'.MYEWALLY_AUTHORIZED_IP.'}}}';
+				define('MYEWALLY_AUTHORIZED_IP', $authorized_ip);
+				if(file_exists(MYEWALLY_REPORT_FILE)) {
+
+					@unlink(MYEWALLY_REPORT_FILE);
+				}
+				$MYEWALLY_frontend = new myEASYwebally_FRONTEND();
+				$MYEWALLY_frontend->locale = MYEWALLY_LOCALE;
 
 				break;
 				#
@@ -249,9 +282,24 @@ class myEASYwebally_CLASS {
 				/**
 				 * get the authorized ip from the main server
 				 */
-				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');
+//				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');  // 1.0.4
+				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
 
 				update_option( 'myewally_authorized_ip', $authorized_ip );
+
+				/**
+				 * @since 1.0.4 : re-create the report file
+				 */
+//echo '{{{'.MYEWALLY_REPORT_FILE.'}}}';
+//echo '{{{'.MYEWALLY_AUTHORIZED_IP.'}}}';
+				define('MYEWALLY_AUTHORIZED_IP', $authorized_ip);
+				if(file_exists(MYEWALLY_REPORT_FILE)) {
+
+					@unlink(MYEWALLY_REPORT_FILE);
+				}
+				$MYEWALLY_frontend = new myEASYwebally_FRONTEND();
+				$MYEWALLY_frontend->locale = MYEWALLY_LOCALE;
+
 				break;
 				#
 			default:
@@ -422,6 +470,7 @@ class myEASYwebally_CLASS {
 
 					echo '<p><i>'
 							. __('Using the same API key on different blogs/sites will group the reports so that you will get a single email for all your WordPress installations.', $this->locale )
+							.'<br />'.MYEWALLY_AUTHORIZED_IP
 							. '</i></p>'
 					;
 
@@ -564,9 +613,10 @@ class myEASYwebally_CLASS {
 
 			</form><?php
 		}
+		echo '</div>';
+
 		//include_once(MEH_PATH . '/inc/myEASYcom.php');
 		measycom_camaleo_links();
-
 	}
 }
 
@@ -665,7 +715,7 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 
 				$all_plugins = get_plugins();
 
-				$special_ini_inp = array('"','=','&','%','!','£','$','^');
+				$special_ini_inp = array('"','=','&','%','!','ï¿½','$','^');
 				$special_ini_out = array('MYEALLYDBLQUOTE','MYEALLYEQ','MYEALLYAND','MYEALLYPERCENT','MYEALLYEXCLAMATION', 'MYEALLYPOUND', 'MYEALLYDOLLAR', 'MYEALLYCARET');
 
 				$record = '';
@@ -753,7 +803,7 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 		/**
 		 * on demand, show the credits on the footer
 		 */
-		if(get_option('myeasy_showcredits')==true && !function_exists('myeasy_credits') && !defined('MYEASY_SHOWCREDITS')) {    /* 1.0.1 changed all references from 'myewally_showcredits' */
+		if(get_option('myeasy_showcredits')==1 && !function_exists('myeasy_credits') && !defined('MYEASY_SHOWCREDITS')) {    /* 1.0.1 changed all references from 'myewally_showcredits' */
 
 			define('MEBAK_FOOTER_CREDITS', '<div style="font-size:9px;text-align:center;">'
 					.'<a href="http://myeasywp.com" target="_blank">Improve Your Life, Go The myEASY Way&trade;</a>'

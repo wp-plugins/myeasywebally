@@ -1,0 +1,1 @@
+$(document).ready(function(){$("#signup").submit(function(){$("#mc-response").html("Adding email address...");$.ajax({url:location.protocol+"//"+location.hostname+"/wp-content/plugins/"+myeasyplugin+"/inc/mc/inc/store-address.php",data:"ajax=true&email="+escape($("#email").val()),success:function(a){$("#mc-response").html(a)}});return false})});
