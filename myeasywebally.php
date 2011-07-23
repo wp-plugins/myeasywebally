@@ -42,7 +42,7 @@ define('EDIT_MAIN_PREFS_BTN', __('Edit your general preferences', MYEWALLY_LOCAL
 /* 1.0.8: BEG */
 //define('MYEASY_CDN', 'http://srht.me/f9'); # 0.1.4
 
-define('MYEASY_CDN', plugins_url() . '/myeasybackup/');
+define('MYEASY_CDN', plugins_url() . '/myeasywebally/');
 define('MYEASY_CDN_IMG', MYEASY_CDN . 'img/');
 define('MYEASY_CDN_CSS', MYEASY_CDN . 'css/');
 define('MYEASY_CDN_JS', MYEASY_CDN . 'js/');
