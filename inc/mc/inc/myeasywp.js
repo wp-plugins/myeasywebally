@@ -1,1 +1,0 @@
-function toggleOptions(c){var b=document.getElementById(c+"-toggler");var a=document.getElementById(c+"-contents");if(b&&a){if(a.style.display=="none"){a.style.display="block";b.className="optionsGroup-toggler-close"}else{a.style.display="none";b.className="optionsGroup-toggler-open"}}};

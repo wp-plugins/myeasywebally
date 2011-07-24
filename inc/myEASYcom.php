@@ -28,7 +28,7 @@ if(!function_exists('measycom_camaleo_links')) {
 		/**
 		 * display the Camaleo links
 		 */
-		global $admin_email;    // @since 1.1.1
+		global $admin_email, $myeasycom_pluginname;    // @since 1.1.1
 
 		if($admin_email == '') {
 
@@ -87,8 +87,11 @@ if(!function_exists('measycom_camaleo_links')) {
 			</div>
 		</form>
 		<script type="text/javascript">var myeasyplugin = '<?php echo myEASYcomCaller; ?>';</script>
-		<script type="text/javascript" src="<?php echo plugins_url() . '/myeasybackup/inc/mc/inc/'; ?>jquery-1.4.2.min.js"></script>
-		<script type="text/javascript" src="<?php echo plugins_url() . '/myeasybackup/inc/mc/inc/'; ?>mailing-list.js"></script><?php
+
+		<script type="text/javascript" src="<?php echo plugins_url() . $myeasycom_pluginname . 'inc/mc/inc/'; ?>jquery-1.4.2.min.js"></script>
+<!--	<script type="text/javascript" src="<?php echo plugins_url() . $myeasycom_pluginname . 'inc/mc/inc/'; ?>mailing-list.js"></script> -->
+		<script type="text/javascript" src="<?php echo plugins_url() . $myeasycom_pluginname . 'js/'; ?>myeasywp.js"></script>
+		<?php
 	}
 }
 

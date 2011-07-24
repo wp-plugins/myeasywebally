@@ -3,7 +3,7 @@
 Plugin Name: myEASYwebally
 Plugin URI: http://myeasywp.com/plugins/myeasywebally/
 Description: More than a simple plugin, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance! You need a free <a href="https://services.myeasywp.com/?page=account-add">API key</a> to use it.
-Version: 1.0.8
+Version: 1.0.8.1
 Author: Ugo Grandolini aka "camaleo"
 Author URI: http://grandolini.com
 */
@@ -42,7 +42,9 @@ define('EDIT_MAIN_PREFS_BTN', __('Edit your general preferences', MYEWALLY_LOCAL
 /* 1.0.8: BEG */
 //define('MYEASY_CDN', 'http://srht.me/f9'); # 0.1.4
 
-define('MYEASY_CDN', plugins_url() . '/myeasywebally/');
+$myeasycom_pluginname = '/myeasywebally/'; # 1.0.8.1
+
+define('MYEASY_CDN', plugins_url() . $myeasycom_pluginname);
 define('MYEASY_CDN_IMG', MYEASY_CDN . 'img/');
 define('MYEASY_CDN_CSS', MYEASY_CDN . 'css/');
 define('MYEASY_CDN_JS', MYEASY_CDN . 'js/');

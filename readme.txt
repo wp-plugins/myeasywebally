@@ -69,6 +69,10 @@ If there is no FAQ send us an email through the <a href="http://myeasywp.com/con
 
 
 == Changelog ==
+
+= 1.0.8.1 (24 July 2011) =
+Replaced few lines of a Creative Commons licensed code used to handle the mailing list subscription as per kind request from wordpress.org
+
 = 1.0.8 (23 July 2011) =
 All the images and javascript code is now loaded from the same server where the plugin is installed.
 Last year I tought it might be useful to have the myeasy common images and code loaded from a CDN to avoid having to update all the plugins in the series each time an image changes and to load pages faster; so I moved all the common items to a CDN.

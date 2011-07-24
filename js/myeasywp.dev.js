@@ -1,7 +1,7 @@
 /**
  * myeasywp.com
  * settings
- * 23 November 2010
+ * 24 July 2012
  */
 function toggleOptions(id) {
 	var toggler=document.getElementById(id+'-toggler');
@@ -19,4 +19,26 @@ function toggleOptions(id) {
 			toggler.className='optionsGroup-toggler-open';
 		}
 	}
+}
+
+if($) {
+
+	$(document).ready(function() {
+
+		$('#signup').submit(function() {
+
+			$('#mc-response').html('Adding email address...');
+
+			$.ajax({
+
+				url: location.protocol+'//'+location.hostname+'/wp-content/plugins/'+myeasyplugin+'/inc/mc/inc/store-address.php',
+				data: 'ajax=true&email=' + escape($('#email').val()),
+				success: function(msg) {
+					$('#mc-response').html(msg);
+				}
+			});
+
+			return false;
+		});
+	});
 }

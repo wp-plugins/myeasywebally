@@ -63,7 +63,9 @@ class myEASYwebally_CLASS {
 
 //echo '(<b>plugin_setup</b>:'. $this->plugin_name.')';
 
-		wp_enqueue_style( 'myeasywp_common', MYEASY_CDN_CSS.'myeasywp.css', '', '20111206', 'screen' );
+		$time = time();
+		wp_enqueue_style( 'myeasywp_common', MYEASY_CDN_CSS.'myeasywp.css', '', $time, 'screen' );
+		wp_enqueue_script( 'myeasywp_common', MYEASY_CDN_JS.'myeasywp.js', '', $time, false );
 
 		if(strlen($this->css)>0) {
 			wp_enqueue_style($this->plugin_slug . '-style', $this->url . '/css/'.$this->css.'.css', '', $this->version, 'screen');
