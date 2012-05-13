@@ -2,6 +2,8 @@
 /**
  * myEASYcom.php: common functions for the myEASYwp plugins serie
  *
+ * Version: 1.5 - 1 May 2012
+ * Version: 1.4 - 26 January 2012
  * Version: 1.3 - 23 July 2011
  * Author: Ugo Grandolini aka "Camaleo"
  * Support site: http://myeasywp.com
@@ -69,21 +71,20 @@ if(!function_exists('measycom_camaleo_links')) {
 
 		?></span>
 		<form id="signup" action="" method="get">
-			<img style="margin-right:8px;" src="http://myeasywp.com/common/img/camaleo.gif" align="absmiddle" />
-			<a href="http://myeasywp.com" target="_blank">myeasywp.com: <?php _e('myEASY Series official site'); ?></a> | <?php
-
-				_e('Be the first to know what\'s going on! Join Our Mailing List:');
-
-				?><input type="text" name="email" id="email" value="<?php echo $admin_email; ?>" />
-			<div style="margin:-10px 0 10px 0;">
+			<div style="margin:-10px 20px 10px 0;border:0px dotted red;">
 				<div style="float:right;margin:12px 0 4px 20px;">
-					<input class="button-primary" name="commit" value="Join" type="submit" />
-				</div>
-				<div style="float:right;margin:10px 0 0 0;">
-					<a href="http://services.myeasywp.com/?page=privacy" target="_blank"><?php
+					<img style="margin-right:8px;" src="http://myeasywp.com/common/img/camaleo.gif" align="absmiddle" />
+					<a href="http://myeasywp.com" target="_blank">myeasywp.com: <?php _e('myEASY Series official site'); ?></a> | <?php
+
+						_e('Be the first to know what\'s going on! Join Our Mailing List:');
+
+					?><input type="text" name="email" id="email" value="<?php echo $admin_email; ?>" />
+					<input class="button-primary" name="commit" value="Join" type="submit" /><br />
+					<a href="http://myeasywp.com/privacy" target="_blank"><?php
 						_e('Your privacy is critically important to us!'); ?>
 					</a>
 				</div>
+				<div style="clear:both;"></div>
 			</div>
 		</form>
 		<script type="text/javascript">var myeasyplugin = '<?php echo myEASYcomCaller; ?>';</script>
@@ -132,7 +133,8 @@ if(!function_exists('measycom_advertisement')) {
 		/**
 		 * display the advertisment stuff
 		 */
-		$html = measycom_get_adcontents('/service/myads-1.1.php?p='.$ref_code.'&u='.$_SERVER['SERVER_NAME']);
+//		$html = measycom_get_adcontents('/service/myads-1.1.php?p='.$ref_code.'&u='.$_SERVER['SERVER_NAME']);
+		$html = measycom_get_adcontents('/service/ad-'.$ref_code.'.html');
 
 		echo '<div style="width:auto;height:auto;background:transparent;padding:0;margin:8px 0 0 0;">'
 				.$html
@@ -151,7 +153,8 @@ if(!function_exists('measycom_pro_stats')) {
 		/**
 		 * log usage statistic
 		 */
-		measycom_get_adcontents('/service/myads-1.1.php?p='.$ref_code.'&u='.$_SERVER['SERVER_NAME'], true);
+//		measycom_get_adcontents('/service/myads-1.1.php?p='.$ref_code.'&u='.$_SERVER['SERVER_NAME'], true);
+		measycom_get_adcontents('/service/ad-'.$ref_code.'.html', true);
 //echo measycom_get_adcontents('/service/myads-1.1.php?p='.$ref_code.'&u='.$_SERVER['SERVER_NAME']);
 	}
 }
@@ -814,11 +817,13 @@ if(!class_exists('myeasywp_news')) {
 			 */
 			if($this->ref_family==false) {
 
-				return $this->get_data('/service/myads-1.1.php?p='.$this->ref_code.'&u='.$_SERVER['SERVER_NAME']);
+//				return $this->get_data('/service/myads-1.1.php?p='.$this->ref_code.'&u='.$_SERVER['SERVER_NAME']);
+				return $this->get_data('/service/ad-'.$this->ref_code.'.html');
 			}
 			else {
 
-				return $this->get_data('/service/myads-1.1.php?p='.$this->ref_code.'&u='.$_SERVER['SERVER_NAME'], true);
+//				return $this->get_data('/service/myads-1.1.php?p='.$this->ref_code.'&u='.$_SERVER['SERVER_NAME'], true);
+				return $this->get_data('/service/ad-'.$this->ref_code.'.html', true);
 			}
 		}
 
@@ -853,7 +858,7 @@ if(!class_exists('myeasywp_news')) {
 				/**
 				 * HTTP ERROR
 				 */
-				$html = 'Connection error measycom_get_adcontents(' . $domain_path . ')';
+				$html = 'Connection error myeasycom_get_adcontents(' . $domain_path . ')';
 			}
 			else {
 

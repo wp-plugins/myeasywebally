@@ -2,13 +2,13 @@
 /*
 Plugin Name: myEASYwebally
 Plugin URI: http://myeasywp.com/plugins/myeasywebally/
-Description: More than a simple plugin, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance! You need a free <a href="https://services.myeasywp.com/?page=account-add">API key</a> to use it.
-Version: 1.0.8.1
+Description: More than a simple plugin, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance! You need a free <a href="https://services.myeasywp.com">API key</a> to use it.
+Version: 1.1.0
 Author: Ugo Grandolini aka "camaleo"
 Author URI: http://grandolini.com
 */
 /*
-	Copyright (C) 2010 Ugo Grandolini  (email : info@myeasywp.com)
+	Copyright (C) 2010,2012 Ugo Grandolini (email : info@myeasywp.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ Author URI: http://grandolini.com
 	*/
 
 define('MYEWALLY_DEBUG', false);
+define('MYEWALLY_VERSION', '1.1.0');
 
 define('MYEWALLY_LOCALE', 'myEASYwebally');
 define('myEASYcomCaller', 'myeasywebally');       # @since 1.0.3: the plugin install folder
@@ -52,7 +53,7 @@ define('MYEASY_CDN_JS', MYEASY_CDN . 'js/');
 /* 1.0.8: END */
 
 
-if(defined('MYEWALLY_DEBUG') && MYEWALLY_DEBUG==true) {
+if(defined('MYEWALLY_DEBUG') && MYEWALLY_DEBUG == true) {
 
 	/**
 	 * debug only!
@@ -64,8 +65,8 @@ if(defined('MYEWALLY_DEBUG') && MYEWALLY_DEBUG==true) {
 }
 else {
 
-	define('SERVICE_SITE_URL',          'http://services.myeasywp.com/' );
-	define('SERVICE_SITE_NAME',         'http://services.myeasywp.com' );
+	define('SERVICE_SITE_URL',          'https://services.myeasywp.com/' );
+	define('SERVICE_SITE_NAME',         'https://services.myeasywp.com' );
 	define('MYEWALLY_AUTHORIZED_HOST',  'services.myeasywp.com');
 
 	define('MYEWALLY_AUTHORIZED_IP',    get_option('myewally_authorized_ip'));

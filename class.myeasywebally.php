@@ -1,11 +1,13 @@
 <?php
 
+/* Version: 1.1.0 */
+
 class myEASYwebally_CLASS {
 
 	/**
 	 * main class for the myEASYwebally plugin
 	 */
-	var $version = '1.0.4.1';
+	var $version = MYEWALLY_VERSION;
 	var $plugin_name ='myEASYwebally';
 	var $plugin_slug = 'myeasy-webally';
 
@@ -185,6 +187,8 @@ class myEASYwebally_CLASS {
 
 // services: 67.215.65.132
 //echo '['.gethostbyname('services.myeasywp.com').']';
+//$authorized_ip = file_get_contents('https://services.myeasywp.com/auth-ip/');   // 1.1.0
+//echo 'auth-ip['.$authorized_ip.']';
 
 
 		switch($_POST['btn'])
@@ -199,7 +203,8 @@ class myEASYwebally_CLASS {
 				 * get the authorized ip from the main server
 				 */
 //				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');  // 1.0.4
-				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
+//				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
+				$authorized_ip = file_get_contents('https://services.myeasywp.com/auth-ip/');   // 1.1.0
 
 				update_option( 'myewally_authorized_ip', $authorized_ip );
 
@@ -285,7 +290,8 @@ class myEASYwebally_CLASS {
 				 * get the authorized ip from the main server
 				 */
 //				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');  // 1.0.4
-				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
+//				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
+				$authorized_ip = file_get_contents('https://services.myeasywp.com/auth-ip/');   // 1.1.0
 
 				update_option( 'myewally_authorized_ip', $authorized_ip );
 
@@ -367,7 +373,7 @@ class myEASYwebally_CLASS {
 
 		if(strlen(trim($_POST['myewally_userKey']))=='')
 		{
-			?><form action="<?php echo SERVICE_SITE_URL; ?>?page=account-add&skid=myEASYserver" method="post" id="fGetKey" name="fGetKey" target="_blank"></form>
+			?><form action="<?php echo SERVICE_SITE_URL; ?>" method="post" id="fGetKey" name="fGetKey" target="_blank"></form>
 			<form name="plugin_settings" method="post" action=""><?php
 
 			$NOTIFICATION_OK = true;
@@ -427,7 +433,7 @@ class myEASYwebally_CLASS {
 						echo ''
 								.'<p>'
 									. __('Have you lost your API key?', $this->locale )
-									. ' <a href="'.SERVICE_SITE_URL.'?page=lost-pik&skid=myEASYserver" target="_blank">' . __('Click here to get it!', $this->locale ) . '</a>'
+									. ' <a href="'.SERVICE_SITE_URL.'?p=reset-pwd" target="_blank">' . __('Click here to get it!', $this->locale ) . '</a>'
 								.'</p>'
 
 								.'<div style="color:#ffffff;background-color:#D54E21;margin:12px 100% 0 0;float:left;font-weight:bold;padding:2px 8px;-moz-border-radius:12px;">'
@@ -449,7 +455,7 @@ class myEASYwebally_CLASS {
 		}
 		else
 		{
-			?><form action="<?php echo SERVICE_SITE_URL; ?>Access.php?skid=myEASYserver" method="post" id="fMainAcct" name="fMainAcct" target="_blank"></form>
+			?><form action="<?php echo SERVICE_SITE_URL; ?>" method="post" id="fMainAcct" name="fMainAcct" target="_blank"></form>
 			<form name="plugin_settings" method="post" action="">
 
 			<div class="light">
@@ -683,10 +689,12 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 				}
 				else {
 
-					$header .= 'if($_SERVER[\'REMOTE_ADDR\']!=\'' . MYEWALLY_AUTHORIZED_IP . '\' '
+//					$header .= 'if($_SERVER[\'REMOTE_ADDR\']!=\'' . MYEWALLY_AUTHORIZED_IP . '\' '					/* 10/05/2012 */
+					$header .= 'if(stripos(\''. MYEWALLY_AUTHORIZED_IP .'\', $_SERVER[\'REMOTE_ADDR\']) === false'	/* 10/05/2012 */
 //								.'|| $tmp[\'host\']!=\'' . MYEWALLY_AUTHORIZED_HOST . '\' ) {' . "\n"
 								.') {' . "\n"
 
+//									. "\t" . 'echo '. MYEWALLY_AUTHORIZED_IP .' . \' \' . $_SERVER[\'REMOTE_ADDR\'] . "\n";' . "\n" /* debug only */
 									. "\t" . 'die(\'good bye little cheek monkey!\');' . "\n"
 
 								.'}' . "\n"
@@ -717,7 +725,7 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 
 				$all_plugins = get_plugins();
 
-				$special_ini_inp = array('"','=','&','%','!','�','$','^');
+				$special_ini_inp = array('"','=','&','%','!','£','$','^');
 				$special_ini_out = array('MYEALLYDBLQUOTE','MYEALLYEQ','MYEALLYAND','MYEALLYPERCENT','MYEALLYEXCLAMATION', 'MYEALLYPOUND', 'MYEALLYDOLLAR', 'MYEALLYCARET');
 
 				$record = '';
