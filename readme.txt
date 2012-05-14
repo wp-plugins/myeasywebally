@@ -61,9 +61,8 @@ This section describes how to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 = If I need help with this plugin, where can I get support? =
-
-For an updated list of FAQ, please check http://myeasywp.com/faq/ &ndash; if there is a FAQ you will find its link there.
-If there is no FAQ send us an email through the <a href="http://myeasywp.com/contact/">contact page</a>
+For an updated list of FAQ, please check <a href="http://myeasywp.com/faq/">the FAQ page</a> &ndash; if there is a FAQ you will find there.
+If you cannot find an answer there please submit your request <a href="https://myeasywp.zendesk.com/">on the support site</a>.
 
 
 == Screenshots ==
