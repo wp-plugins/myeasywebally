@@ -1,6 +1,6 @@
 <?php
 
-/* Version: 1.1.0 */
+/* Version: 1.3.4 */
 
 class myEASYwebally_CLASS {
 
@@ -8,8 +8,10 @@ class myEASYwebally_CLASS {
 	 * main class for the myEASYwebally plugin
 	 */
 	var $version = MYEWALLY_VERSION;
-	var $plugin_name ='myEASYwebally';
+	var $plugin_name = 'myEASYwebally';
+	var $folder_name = MYEWALLY_FOLDER;
 	var $plugin_slug = 'myeasy-webally';
+//	var $plugin_notifier = 'myeasywebally';
 
 	var $css;               // name of the css file
 	var $js;                // name of the javascript file
@@ -62,7 +64,6 @@ class myEASYwebally_CLASS {
 		/**
 		 * setting up css & js
 		 */
-
 //echo '(<b>plugin_setup</b>:'. $this->plugin_name.')';
 
 		$time = time();
@@ -70,22 +71,32 @@ class myEASYwebally_CLASS {
 		wp_enqueue_script( 'myeasywp_common', MYEASY_CDN_JS.'myeasywp.js', '', $time, false );
 
 		if(strlen($this->css)>0) {
+
 			wp_enqueue_style($this->plugin_slug . '-style', $this->url . '/css/'.$this->css.'.css', '', $this->version, 'screen');
 		}
 		if(strlen($this->js)>0) {
+
 			wp_enqueue_script($this->plugin_slug . '-script', $this->url . '/js/'.$this->js.'.js', '', $this->version, false);
 		}
 
 		/**
+		 * updates notifier
+		 */
+		$updates = '';
+
+
+		/**
 		 * adding the plugin entry in the settings menu
 		 */
-		$plugin_page = add_options_page( $this->plugin_name,                 // page title
-										 $this->plugin_name,                 // menu title
-										 'administrator',                    // access level
-										 $this->plugin_name.'_settings',     // file
-//										 $this->plugin_name.'_settings_page' // function
-										 array($this, 'the_settings_page')   // function
-										);
+		$plugin_page = add_options_page(
+
+			$this->plugin_name,						// page title
+			$this->plugin_name . $updates,			// menu title
+			'administrator',						// access level
+			$this->plugin_name.'_settings',			// file
+//			$this->plugin_name.'_settings_page		// function
+			array($this, 'the_settings_page')		// function
+		);
 
 		if(function_exists('add_contextual_help') && strlen($this->help)>0) {
 			/**
@@ -115,10 +126,9 @@ class myEASYwebally_CLASS {
 
 	function plugin_settings($links) {
 
-		$settings_link = '<a href="options-general.php?page='.$this->plugin_name.'_settings'.'">' . __('Settings') . '</a>';
+		$settings_link = '<a href="options-general.php?page='. $this->plugin_name .'_settings'.'">' . __('Settings') . '</a>';
 		array_unshift($links, $settings_link);
 		return $links;
-
 	}
 
 	function add_plugin_links($links, $file) {
@@ -151,13 +161,11 @@ class myEASYwebally_CLASS {
 			$myeasywp_news->plugin_init();
 			$myeasywp_news->register_widget();
 		}
-
 	}
 
 	function dashboard_widget_function() {
 
 		echo $this->dash_contents;
-
 	}
 
 	function the_settings_page() {
@@ -291,9 +299,57 @@ class myEASYwebally_CLASS {
 				 */
 //				$authorized_ip = file_get_contents('http://myeasywp.com/service/auth-ip.php');  // 1.0.4
 //				$authorized_ip = gethostbyname('services.myeasywp.com');                        // 1.0.4
-				$authorized_ip = file_get_contents('https://services.myeasywp.com/auth-ip/');   // 1.1.0
+
+				/**
+				 * 14/06/2012
+				 * on some servers URL file-access can be disabled in the server configuration
+				 */
+//				$authorized_ip = file_get_contents('https://services.myeasywp.com/auth-ip/');   // 1.1.0
+
+				$response = wp_remote_post(
+
+					'https://services.myeasywp.com/auth-ip/',
+					array(
+
+						'method' => 'POST',
+						'timeout' => 5,
+						'redirection' => 5,
+						'httpversion' => '1.0',
+						'blocking' => true,
+						'headers' => array('user-agent' => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'),
+					)
+				);
+
+				$authorized_ip = '';
+
+				if( is_wp_error( $response ) ) {
+
+					/**
+					 * Something went wrong!
+					 */
+					echo '<div style="warning">'
+						  . '<h1>Sorry but it is not possible to connect to the myEASY licensing server: please try again later.</h1>'
+
+						  . '<p>Error code: 999-'. $response['response']['code'] .'</p>'
+//						  . '<p>Please <a class="myerror" href="' . $this->contactURL . '"><strong>get in touch</strong></a> at your soonest convenience.</p>'
+						  . '</div>';
+				}
+				else if( (int) $response['response']['code'] != 200 ) {
+
+					echo '<div style="warning">'
+						  . '<h1>Sorry but it is not possible to connect to the myEASY licensing server: please try again later.</h1>'
+
+						  . '<p>Error code: ' . $response['response']['code'] . '</p>'
+//						  . '<p>Please <a class="myerror" href="' . $this->contactURL . '"><strong>get in touch</strong></a> at your soonest convenience.</p>'
+						  . '</div>';
+				}
+				else {
+
+					$authorized_ip = $response['body'];
+				}
 
 				update_option( 'myewally_authorized_ip', $authorized_ip );
+				/* 14/06/2012: END */
 
 				/**
 				 * @since 1.0.4 : re-create the report file
@@ -301,6 +357,7 @@ class myEASYwebally_CLASS {
 //echo '{{{'.MYEWALLY_REPORT_FILE.'}}}';
 //echo '{{{'.MYEWALLY_AUTHORIZED_IP.'}}}';
 				define('MYEWALLY_AUTHORIZED_IP', $authorized_ip);
+
 				if(file_exists(MYEWALLY_REPORT_FILE)) {
 
 					@unlink(MYEWALLY_REPORT_FILE);
@@ -309,7 +366,7 @@ class myEASYwebally_CLASS {
 				$MYEWALLY_frontend->locale = MYEWALLY_LOCALE;
 
 				break;
-				#
+
 			default:
 		}
 
@@ -476,9 +533,18 @@ class myEASYwebally_CLASS {
 
 				?><input class="button-secondary" style="margin:6px 0;" type="button" name="btn" value="<?php echo EDIT_MAIN_PREFS_BTN; ?>" onclick="document.forms.fMainAcct.submit();" /><?php
 
+					if(defined('MYEWALLY_AUTHORIZED_IP') && strlen(MYEWALLY_AUTHORIZED_IP) > 0) {
+
+						$tmp = MYEWALLY_AUTHORIZED_IP;
+					}
+					else {
+
+						$tmp = $authorized_ip;
+					}
+
 					echo '<p><i>'
 							. __('Using the same API key on different blogs/sites will group the reports so that you will get a single email for all your WordPress installations.', $this->locale )
-							.'<br />'.MYEWALLY_AUTHORIZED_IP
+							.'<br />'. $tmp
 							. '</i></p>'
 					;
 
@@ -621,6 +687,7 @@ class myEASYwebally_CLASS {
 
 			</form><?php
 		}
+
 		echo '</div>';
 
 		//include_once(MEH_PATH . '/inc/myEASYcom.php');
@@ -667,7 +734,6 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 
 			if($f)
 			{
-
 				$header = "<?php\n"
 
 /*							. '$tmp = parse_url($_SERVER[\'HTTP_REFERER\']);' . "\n"
@@ -689,8 +755,10 @@ class myEASYwebally_FRONTEND extends myEASYwebally_CLASS {
 				}
 				else {
 
+					$authorized_ip = get_option('myewally_authorized_ip');
+
 //					$header .= 'if($_SERVER[\'REMOTE_ADDR\']!=\'' . MYEWALLY_AUTHORIZED_IP . '\' '					/* 10/05/2012 */
-					$header .= 'if(stripos(\''. MYEWALLY_AUTHORIZED_IP .'\', $_SERVER[\'REMOTE_ADDR\']) === false'	/* 10/05/2012 */
+					$header .= 'if(stripos(\''. $authorized_ip .'\', $_SERVER[\'REMOTE_ADDR\']) === false'	/* 10/05/2012 */
 //								.'|| $tmp[\'host\']!=\'' . MYEWALLY_AUTHORIZED_HOST . '\' ) {' . "\n"
 								.') {' . "\n"
 
@@ -837,14 +905,13 @@ class myEASYwebally_BACKEND extends myEASYwebally_CLASS {
 	/**
 	 * only executed in the backend: admininstration
 	 */
-
 	function myEASYwebally_BACKEND() {
 
 		$this->url = plugins_url('', __FILE__);
 
 		add_action('admin_init', array($this, 'plugin_init'));
 		add_action('admin_menu', array($this, 'plugin_setup'));
-
 	}
 }
+
 ?>

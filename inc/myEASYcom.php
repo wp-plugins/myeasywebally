@@ -2,19 +2,22 @@
 /**
  * myEASYcom.php: common functions for the myEASYwp plugins serie
  *
+ * Version: 1.7 - 16 June 2012
+ * Version: 1.6 - 16 May 2012
  * Version: 1.5 - 1 May 2012
  * Version: 1.4 - 26 January 2012
  * Version: 1.3 - 23 July 2011
+ *
  * Author: Ugo Grandolini aka "Camaleo"
  * Support site: http://myeasywp.com
  *
- * Copyright (C) 2010 Ugo Grandolini  (email : info@myeasywp.com)
+ * Copyright (C) 2010,2012 Ugo Grandolini  (email : info@myeasywp.com)
 */
 
 # TODO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # DEBUG
-#define('MYEASYWP_DOMAIN', 'myeasywp.lan');
+//define('MYEASYWP_DOMAIN', 'myeasywp.lan');
 
 # PRODUCTION
 define('MYEASYWP_DOMAIN', 'myeasywp.com');
@@ -63,10 +66,13 @@ if(!function_exists('measycom_camaleo_links')) {
 	?><div align="right" style="margin:12px 0 0 0;">
 		<span id="mc-response"><?php
 
-			require_once('mc/inc/store-address.php');
+			/**
+			 * 1.7: rewritten some creative common code that prevented wp authorization
+ 			 */
+			require_once('mc/inc/mailchimp.php');
 			if($_GET['submit']) {
 
-				echo storeAddress();
+				echo mailchimp();
 			}
 
 		?></span>
@@ -134,11 +140,11 @@ if(!function_exists('measycom_advertisement')) {
 		 * display the advertisment stuff
 		 */
 //		$html = measycom_get_adcontents('/service/myads-1.1.php?p='.$ref_code.'&u='.$_SERVER['SERVER_NAME']);
-		$html = measycom_get_adcontents('/service/ad-'.$ref_code.'.html');
+		$html = measycom_get_adcontents('/service/ad-'. $ref_code .'.html');
 
 		echo '<div style="width:auto;height:auto;background:transparent;padding:0;margin:8px 0 0 0;">'
-				.$html
-			.'</div>'
+				. $html
+			. '</div>'
 		;
 	}
 }
@@ -183,7 +189,9 @@ if(!function_exists('measycom_get_adcontents')) {
 		 * $domain_path = '/service/myads-1.1.php?p={code | donate}&d={code}'
 		 */
 		$domain = MYEASYWP_DOMAIN;
-		$domain_path = MYEASYWP_PATH.$domain_path;
+		$domain_path = MYEASYWP_PATH . $domain_path;
+
+//return $domain_path;
 
 		$html = '';
 
@@ -764,7 +772,7 @@ if(!class_exists('myeasywp_news')) {
 
 	class myeasywp_news {
 
-		var $version = '1.0';
+		var $version = '1.1';
 
 		var $ref_code;   // caller plugin
 		var $ref_family; // caller family
@@ -776,12 +784,12 @@ if(!class_exists('myeasywp_news')) {
 			/**
 			 * initializations
 			 */
-			$this->cache = ABSPATH.'wp-content/uploads/myeasywp_dashnews-'.$this->ref_code.'.txt';
+			$this->cache = ABSPATH .'wp-content/uploads/myeasywp_dashnews-'. $this->ref_code .'.txt';
 
 			$this->html = $this->fill_html();
 //echo '>>>'.$this->html.'<br>['.$this->ref_family.']<br>';
 
-			if(is_dir(ABSPATH.'wp-content/uploads') && is_writable(ABSPATH.'wp-content/uploads')) {
+			if(is_dir(ABSPATH . 'wp-content/uploads') && is_writable(ABSPATH . 'wp-content/uploads')) {
 
 				if(file_exists($this->cache)) {
 
@@ -802,12 +810,20 @@ if(!class_exists('myeasywp_news')) {
 				}
 			}
 
-			add_action('wp_dashboard_setup', array($this, 'register_widget'));
+			$cache = file_get_contents($this->cache);
+			if(strlen($cache) > 0) {
+
+				add_action('wp_dashboard_setup', array($this, 'register_widget'));
+			}
 		}
 
 		function register_widget() {
 
-			wp_add_dashboard_widget('myeasywp-news', 'myEASYwp.com news', array($this, 'myeasywp_dashnews'));
+			$cache = file_get_contents($this->cache);
+			if(strlen($cache) > 0) {
+
+				wp_add_dashboard_widget('myeasywp-news', 'myEASYwp.com news', array($this, 'myeasywp_dashnews'));
+			}
 		}
 
 		function fill_html() {
@@ -815,15 +831,15 @@ if(!class_exists('myeasywp_news')) {
 			/**
 			 * get the html contents
 			 */
-			if($this->ref_family==false) {
+			if($this->ref_family == false) {
 
 //				return $this->get_data('/service/myads-1.1.php?p='.$this->ref_code.'&u='.$_SERVER['SERVER_NAME']);
-				return $this->get_data('/service/ad-'.$this->ref_code.'.html');
+				return $this->get_data('/service/ad-'. $this->ref_code .'.html');
 			}
 			else {
 
 //				return $this->get_data('/service/myads-1.1.php?p='.$this->ref_code.'&u='.$_SERVER['SERVER_NAME'], true);
-				return $this->get_data('/service/ad-'.$this->ref_code.'.html', true);
+				return $this->get_data('/service/ad-'. $this->ref_code .'.html', true);
 			}
 		}
 
@@ -848,7 +864,7 @@ if(!class_exists('myeasywp_news')) {
 			 * $domain_path = '/service/myads-1.1.php?p={code | donate}&d={code}'
 			 */
 			$domain = MYEASYWP_DOMAIN;
-			$domain_path = MYEASYWP_PATH.$domain_path;
+			$domain_path = MYEASYWP_PATH . $domain_path;
 			$html = '';
 
 			$fp = @fsockopen($domain, 80, $errno, $errstr, 3);
@@ -898,6 +914,11 @@ if(!class_exists('myeasywp_news')) {
 
 				fclose($fp);
 			}
+
+//echo $header . '<br>';
+//echo $result . '<br>';
+//echo $html . '<br>';
+
 			return $html;
 		}
 
@@ -913,9 +934,12 @@ if(!class_exists('myeasywp_news')) {
 				$this->html = $this->fill_html();
 			}
 
-			echo '<div style="width:auto;height:auto;background:transparent;padding:0;margin:8px 0 0 0;">'
-				     .$this->html
-			     .'</div>';
+			if(strlen($this->html) > 0) {
+
+				echo '<div style="width:auto;height:auto;background:transparent;padding:0;margin:8px 0 0 0;">'
+					  . $this->html
+					  .'</div>';
+			}
 		}
 	}
 }
@@ -1374,4 +1398,253 @@ if(!class_exists('wp_plugin_donation_to_camaleo')) {
 	}
 ##	new wp_plugin_donation_to_camaleo();
 }
-?>
+
+if(!class_exists('myEASYnotifier')) {
+
+	class myEASYnotifier {
+
+		/**
+		 * to be only executed in the backend: admininstration
+		 * notification system adapted from a Joao Araujo work ~ http://twitter.com/unispheredesign
+		 *
+		 * call as follow:
+		 *
+		 * $PLUGIN_notifier = new myEASYnotifier();
+		 *
+		 * $PLUGIN_notifier->version = PLUGIN_VERSION;
+		 * $PLUGIN_notifier->plugin_name = PLUGIN_PLUGINNAME;
+		 * $PLUGIN_notifier->plugin_id = PLUGIN_PLUGINID;
+		 * $PLUGIN_notifier->folder_name = PLUGIN_FOLDER;
+		 * $PLUGIN_notifier->plugin_notifier = PLUGIN_NOTIFIER;
+		 * $PLUGIN_notifier->version = '0.0.0'; // todo | debug
+		 * $PLUGIN_notifier->notifier_cache_interval = 0; // todo | debug
+		 *
+		 * $PLUGIN_notifier->__init();
+		 *
+		 */
+
+		// Default values
+		var $version = '0.0.1';
+		var $plugin_name = 'plugin-name';
+		var $plugin_id = 0;
+		var $folder_name = 'folder-name';
+		var $plugin_notifier = 'notifier-name';
+
+		// The time interval for the remote XML cache in the database
+		var $notifier_cache_interval = 21600; // default to 6 hours
+
+		// Where to get the remote notifier XML file containing the latest version of the plugin and changelog
+		var $notifier_xml_url = 'http://myeasywp.altervista.org/';
+
+		function __init() {
+
+			add_action('admin_menu', array($this, 'update_notifier_menu'));
+
+// todo ------------
+			/* add_action('admin_bar_menu', array($this, 'update_notifier_bar_menu', 1000)); */
+			add_action('admin_bar_menu', array($this, 'update_notifier_bar_menu'));
+// todo ------------
+		}
+
+		// Adds an update notification to the WordPress Dashboard menu
+		function update_notifier_menu() {
+
+			// Stop if simplexml_load_string funtion isn't available
+			if(function_exists('simplexml_load_string')) {
+
+				// Get the latest remote XML file on our server
+				$xml = $this->get_latest_theme_version($this->notifier_cache_interval);
+
+				/**************
+				 * Read theme current version from the style.css
+				 * $theme_data = get_theme_data(TEMPLATEPATH . '/style.css');
+				 *************/
+
+				if( ! is_object( $xml ) ) {
+
+					return;
+				}
+
+				if( version_compare($xml->latest, $this->version, '>') ) {
+
+					// Compare current theme version with the remote XML version
+					add_dashboard_page(
+
+						$this->plugin_name . ' Updates',
+						$this->plugin_name . ' <span class="update-plugins count-1"><span class="update-count">1</span></span>',
+						'administrator',
+						'theme-update-notifier-' . $this->plugin_notifier,
+						array($this, 'update_notifier')
+					);
+				}
+			}
+		}
+
+		// Adds an update notification to the WordPress 3.1+ Admin Bar
+		function update_notifier_bar_menu() {
+
+			if(function_exists('simplexml_load_string')) {
+
+				// Stop if simplexml_load_string funtion isn't available
+				global $wp_admin_bar, $wpdb;
+
+				if( !is_super_admin() || !is_admin_bar_showing() ) {
+
+					// Don't display notification in admin bar if it's disabled or the current user isn't an administrator
+					return;
+				}
+
+				// Get the latest remote XML file on our server
+				$xml = $this->get_latest_theme_version($this->notifier_cache_interval);
+
+				/**************
+				 * Read theme current version from the style.css
+				 * $theme_data = get_theme_data(TEMPLATEPATH . '/style.css');
+				 *************/
+
+				if( ! is_object( $xml ) ) {
+
+					return;
+				}
+
+				if( version_compare($xml->latest, $this->version, '>') ) {
+
+					// Compare current theme version with the remote XML version
+					$wp_admin_bar->add_menu(
+
+						array(
+
+							'id' => 'update_notifier-' . $this->plugin_notifier,
+							'title' => '<span>' . $this->plugin_name . ' <span id="ab-updates">1 Update</span></span>',
+							'href' => get_admin_url() . 'index.php?page=theme-update-notifier-' . $this->plugin_notifier
+						)
+					);
+				}
+			}
+		}
+
+		// The notifier page
+		function update_notifier() {
+
+			// Get the latest remote XML file on our server
+			$xml = $this->get_latest_theme_version( $this->notifier_cache_interval );
+
+			/**************
+			 * Read theme current version from the style.css
+			 * $theme_data = get_theme_data(TEMPLATEPATH . '/style.css');
+			 *************/
+//			$theme_data['Version'];
+//			$theme_shot = '<img style="float:left;margin:0 20px 20px 0;border:1px solid #ddd;" src="'. get_template_directory_uri() .'/screenshot.png" />';
+
+			$theme_shot = '<img style="float:right;margin:0 20px 0 0;border:none;" src="http://myeasywp.com/img/update-available.jpg" />';
+
+			$theme_version = $this->version;
+			$theme_name = $this->plugin_name;
+			$ID = $this->plugin_id;
+			$theme_folder = $this->folder_name;
+
+			$latest_version = $xml->latest;
+
+			/**
+			 * <p><strong>Please note:</strong> make a <strong>backup</strong> of the Plugin inside your WordPress installation folder
+			 * <strong>/wp-content/plugins/{$theme_folder}/</strong>. I also encourage you to make a full backup your site and database before performing an update.</p>
+			 */
+			$html = <<< HTML
+<style>.update-nag {display:none;}</style>
+<div class="wrap">
+	<div id="icon-tools" class="icon32"></div>
+	<h2>{$theme_name} Updates</h2>
+	<div id="message" class="updated below-h2">
+		<h2>
+			<strong>There is a new version of the {$theme_name} plugin available!</strong>
+			<br />You are using version <strong>{$theme_version}</strong>: please update to version <strong>{$latest_version}</strong>.
+		</h2>
+		<div>
+			<h3>Download and Update Instructions</h3>
+			<p>
+				To get the latest <strong>{$theme_name}</strong> update <a href="http://myeasywp.com/free-downloads/?id={$ID}"><strong>click here</strong></a>
+				or visit the <a href="http://myeasywp.com/plugins/{$theme_folder}/"><strong>plugin page</strong></a> at MYEASYWP.COM,
+				look for the <strong>download button</strong> and re-download the plugin.
+			</p>
+			<p>
+				Extract the contents of the zip file and upload the <code>/{$theme_folder}</code> folder to your <code>/wp-content/plugins/</code>
+				folder using an FTP software overwriting the old folder.
+			</p>
+		</div>
+	</div>
+	<h2 class="changelog">Changelog</h2>
+	{$theme_shot}
+
+HTML;
+
+			echo $html . $xml->changelog . '</div>';
+		}
+
+		// Get the remote XML file contents and return its data (Version and Changelog)
+		// Uses the cached version if available and inside the time interval defined
+		function get_latest_theme_version($interval) {
+
+			$notifier_file_url = $this->notifier_xml_url . $this->plugin_notifier . '.xml';
+			$db_cache_field = 'notifier-cache-' . $this->plugin_notifier;
+			$db_cache_field_last_updated = 'notifier-cache-last-updated-' . $this->plugin_notifier;
+
+			$last = get_option( $db_cache_field_last_updated );
+			$now = time();
+
+//echo '<div class="updated" style="width:100%;padding-top:40px;">';
+//echo '$db_cache_field['.$db_cache_field.']<br>';
+//echo '$db_cache_field_last_updated['.$db_cache_field_last_updated.']<br>';
+//echo '$notifier_file_url['.$notifier_file_url.']<br>';
+//echo '$last['.$last.']<br>';
+//echo '</div>';
+
+			// check the cache
+			if( !$last || (( $now - $last ) > $interval) ) {
+
+				// cache doesn't exist, or is old, so refresh it
+				if( function_exists('curl_init') ) {
+
+					// if cURL is available, use it...
+					$ch = curl_init($notifier_file_url);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_HEADER, 0);
+					curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+					$cache = curl_exec($ch);
+					curl_close($ch);
+				}
+				else {
+
+					// ...if not, use the common file_get_contents()
+					$cache = @file_get_contents($notifier_file_url);
+				}
+
+				if($cache) {
+
+					// we got good results
+					update_option( $db_cache_field, $cache );
+					update_option( $db_cache_field_last_updated, time() );
+				}
+
+				// read from the cache file
+				$notifier_data = get_option( $db_cache_field );
+			}
+			else {
+
+				// cache file is fresh enough, so read from it
+				$notifier_data = get_option( $db_cache_field );
+			}
+
+			// Let's see if the $xml data was returned as we expected it to.
+			// If it didn't, use the default 1.0.0 as the latest version so that we don't have problems when the remote server hosting the XML file is down
+			if( strpos((string)$notifier_data, '<notifier>') === false) {
+
+				$notifier_data = file_get_contents( dirname(__FILE__) . '/'. $this->plugin_name .'.xml' );
+			}
+
+			// Load the remote XML data into a variable and return it
+			$xml = @simplexml_load_string($notifier_data);
+
+			return $xml;
+		}
+	}
+}

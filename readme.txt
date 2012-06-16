@@ -3,8 +3,8 @@ Contributors: camaleo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WNNDSCQ5L8N5J
 Tags: myeasy, web, webally, ally, update, admin, administration, help, plugin, plugins, wordpress
 Requires at least: 2.8
-Tested up to: 3.3.*
-Stable tag: 1.1.0
+Tested up to: 3.4.*
+Stable tag: 1.3.4
 License: GPLv2 or later
 
 More than a simple plugins, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance!
@@ -51,8 +51,6 @@ Related Links:
 
 
 == Installation ==
-This section describes how to install the plugin and get it working.
-
 1. Upload the full directory into your `wp-content/plugins` directory
 1. Pending on your server setting you may need to manually copy one file from the plugins directory to your main WordPress installation directory; the plugin will let you know what to copy and where if it will not be able to do it itself
 1. Activate the plugin through the 'Plugins' menu in the WordPress Administration page. Note: to be able to activate the the plugin you need to enter your own API key; you can create your free API key at http://services.myeasywp.com/account-add/
@@ -61,17 +59,32 @@ This section describes how to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 = If I need help with this plugin, where can I get support? =
-For an updated list of FAQ, please check <a href="http://myeasywp.com/faq/">the FAQ page</a> &ndash; if there is a FAQ you will find there.
-If you cannot find an answer there please submit your request <a href="https://myeasywp.zendesk.com/">on the support site</a>.
+
+For an updated list of FAQ, please check:
+http://myeasywp.com/faq/
+
+If you cannot find an answer there please submit your request at:
+https://myeasywp.zendesk.com/
 
 
 == Screenshots ==
-1. myEASYwebally settings
-2. Example of a blog report as shown on the dedicated server site
-3. Coming soon! The myEASY Dressing Room&trade; &mdash; a safe place where you can finally modify you blog as much as you like before making it available to the public
+To save your bandwidth, we better like to show you the screen shots at the <a href="http://myeasywp.com/plugins/myeasywebally/">official plugin page</a>.
 
 
 == Changelog ==
+= 1.3.4 (14 June 2012) =
+Fully WordPress 3.4.* compatible.
+
+Fixed:
+* The plugin can be successfully activated also on servers with URL file-access disabled.
+* Under some circumstances the notifier file was not properly written, preventing the mechanism to work.
+
+= 1.3.1 (25 May 2012) =
+Removed the updates notification system as the plugin is available again at wordpress.org
+For info about why it was removed, please see: http://myeasywp.com/protect-your-rights/
+
+= 1.2 (15 May 2012) =
+Added the updates notification system.
 
 = 1.1.0 (13 May 2012) =
 Update the plugin options after installing this version.
