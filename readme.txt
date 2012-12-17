@@ -3,8 +3,8 @@ Contributors: camaleo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WNNDSCQ5L8N5J
 Tags: myeasy, web, webally, ally, update, admin, administration, help, plugin, plugins, wordpress
 Requires at least: 2.8
-Tested up to: 3.4.*
-Stable tag: 1.3.4
+Tested up to: 3.5.*
+Stable tag: 1.3.5
 License: GPLv2 or later
 
 More than a simple plugins, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance!
@@ -72,6 +72,9 @@ To save your bandwidth, we better like to show you the screen shots at the <a hr
 
 
 == Changelog ==
+= 1.3.5 (17 December 2012) =
+Fully WordPress 3.5.* compatible.
+
 = 1.3.4 (14 June 2012) =
 Fully WordPress 3.4.* compatible.
 

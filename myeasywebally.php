@@ -3,12 +3,12 @@
 Plugin Name: myEASYwebally
 Plugin URI: http://myeasywp.com/plugins/myeasywebally/
 Description: More than a simple plugin, myEASYwebally will save you a lot of time when doing your WordPress blog maintenance! You need a free <a href="http://myeasywp.com/services/">API key</a> to use it.
-Version: 1.3.4
+Version: 1.3.5
 Author: Ugo Grandolini aka "camaleo"
 Author URI: http://grandolini.com
 */
 /*
-	Copyright (C) 2010,2012 Ugo Grandolini (email : info@myeasywp.com)
+	Copyright (C) 2010,2013 Ugo Grandolini (email : info@myeasywp.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ Author URI: http://grandolini.com
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 
-define('MYEWALLY_VERSION', '1.3.4');
+define('MYEWALLY_VERSION', '1.3.5');
 define('MYEWALLY_PLUGINNAME', 'myEASYwebally');
 define('MYEWALLY_PLUGINID', 1);
 define('MYEWALLY_FOLDER', basename(dirname(__FILE__)));
